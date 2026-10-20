@@ -21,7 +21,8 @@ docker build -t adalqarau-a5:local .
 docker run --rm adalqarau-a5:local sh -c 'python processor.py testdata/contracts.csv /tmp/summary.csv && cat /tmp/summary.csv'
 ```
 
-The Docker base image is pinned by digest. `Jenkinsfile` runs the tests on each
-SCM poll, builds the image, compares container output to
-`testdata/expected-yearly-summary.csv`, and archives the synthetic input and
+The Docker base image is pinned by digest. Jenkins checks SCM every two
+minutes; a changed revision triggers tests, an image build, and a container
+smoke run. The smoke stage compares output to
+`testdata/expected-yearly-summary.csv` and archives the synthetic input and
 verified output. The project uses Python's standard library only.
