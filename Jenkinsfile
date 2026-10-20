@@ -15,11 +15,13 @@ pipeline {
         }
         stage('Smoke run') {
             steps {
-                sh "docker run --rm adalqarau-a5:${BUILD_NUMBER} sh -c 'python processor.py testdata/contracts.csv /tmp/summary.csv && cat /tmp/summary.csv'"
+                sh "docker run --rm adalqarau-a5:${BUILD_NUMBER} sh -c 'python processor.py testdata/contracts.csv /tmp/summary.csv && cat /tmp/summary.csv' > summary.csv"
+                sh 'cmp summary.csv testdata/expected-yearly-summary.csv'
+                sh 'cat summary.csv'
             }
         }
     }
     post {
-        always { archiveArtifacts artifacts: 'testdata/contracts.csv', fingerprint: true }
+        always { archiveArtifacts artifacts: 'testdata/contracts.csv,summary.csv', fingerprint: true }
     }
 }

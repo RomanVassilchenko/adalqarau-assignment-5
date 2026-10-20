@@ -21,6 +21,8 @@ class SummarizeTests(unittest.TestCase):
             "A,2025-01-01,1\nA,2025-01-02,2\n",
             "A,2025-01-01,-1\n",
             "A,2025-02-30,1\n",
+            "A,20250101,1\n",
+            "A,2025-W01-1,1\n",
             "A,2025-01-01,01\n",
         ):
             with self.subTest(rows=rows), self.assertRaises(ValueError):

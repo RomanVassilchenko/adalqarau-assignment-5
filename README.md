@@ -22,5 +22,6 @@ docker run --rm adalqarau-a5:local sh -c 'python processor.py testdata/contracts
 ```
 
 The Docker base image is pinned by digest. `Jenkinsfile` runs the tests on each
-SCM poll, builds the image, performs a container smoke run, and archives the
-synthetic input. The project uses Python's standard library only.
+SCM poll, builds the image, compares container output to
+`testdata/expected-yearly-summary.csv`, and archives the synthetic input and
+verified output. The project uses Python's standard library only.
