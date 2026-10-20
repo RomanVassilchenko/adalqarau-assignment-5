@@ -25,4 +25,7 @@ The Docker base image is pinned by digest. Jenkins checks SCM every two
 minutes; a changed revision triggers tests, an image build, and a container
 smoke run. The smoke stage compares output to
 `testdata/expected-yearly-summary.csv` and archives the synthetic input and
-verified output. The project uses Python's standard library only.
+verified output. The pipeline then replaces only its labeled local test
+container, serves the generated summary at `http://127.0.0.1:18081/summary.csv`,
+and checks that HTTP response against the same fixture. No external registry
+or production server is used. The project uses Python's standard library only.

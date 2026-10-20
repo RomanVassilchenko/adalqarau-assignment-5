@@ -2,4 +2,6 @@ FROM python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c
 WORKDIR /app
 COPY processor.py .
 COPY testdata/contracts.csv ./testdata/contracts.csv
+COPY testdata/expected-yearly-summary.csv ./testdata/expected-yearly-summary.csv
+COPY smoke_deployment.py .
 CMD ["python", "processor.py", "testdata/contracts.csv", "/tmp/yearly-summary.csv"]
