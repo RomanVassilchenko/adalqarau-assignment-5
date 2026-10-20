@@ -1,7 +1,6 @@
 pipeline {
     agent any
     triggers { pollSCM('H/2 * * * *') }
-    options { timestamps() }
     stages {
         stage('Unit tests') {
             steps {
