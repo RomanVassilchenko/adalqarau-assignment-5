@@ -1,0 +1,26 @@
+name: Jenkins pipeline
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  jenkins:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Run Jenkinsfile in Jenkins for this commit
+        run: ci/run-jenkins.sh
+        env:
+          GIT_COMMIT_SHA: ${{ github.sha }}
+
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: jenkins-build-${{ github.sha }}
+          path: jenkins-evidence/

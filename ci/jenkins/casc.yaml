@@ -1,0 +1,26 @@
+# Ephemeral Jenkins controller for ci/run-jenkins.sh (GitHub Actions and local).
+# It listens only on the loopback interface; do not expose it publicly.
+jenkins:
+  systemMessage: "AdalQarau Assignment 5: Jenkins started by GitHub Actions"
+  numExecutors: 1
+  securityRealm: none
+  authorizationStrategy: unsecured
+jobs:
+  - script: >
+      pipelineJob('assignment5') {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url('file:///repo') }
+                branch(System.getenv('GIT_COMMIT_SHA'))
+              }
+            }
+            scriptPath('Jenkinsfile')
+            lightweight(false)
+          }
+        }
+      }
+unclassified:
+  location:
+    url: "http://127.0.0.1:18080/"
